@@ -105,7 +105,7 @@ export function Sheet({
                     <X className="size-5" />
                   </DialogPrimitive.Close>
                 </div>
-                <div className="safe-x min-h-0 flex-1 overflow-y-auto pb-6">
+                <div className="safe-x min-h-0 flex-1 overflow-y-auto pb-6 pt-2">
                   {children}
                 </div>
               </motion.div>
