@@ -26,9 +26,9 @@ describe('titleCreateSchema', () => {
   });
 
   it('requires a non-empty name within 300 chars', () => {
-    expect(titleCreateSchema.safeParse({ type: 'FILM', name: '' }).success).toBe(
-      false,
-    );
+    expect(
+      titleCreateSchema.safeParse({ type: 'FILM', name: '' }).success,
+    ).toBe(false);
     expect(
       titleCreateSchema.safeParse({ type: 'FILM', name: 'x'.repeat(301) })
         .success,

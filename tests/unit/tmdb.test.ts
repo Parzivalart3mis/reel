@@ -8,7 +8,11 @@ import {
 import { ApiError } from '@/lib/api';
 
 const ok = (data: unknown) =>
-  Promise.resolve({ ok: true, status: 200, json: async () => data } as Response);
+  Promise.resolve({
+    ok: true,
+    status: 200,
+    json: async () => data,
+  } as Response);
 
 const fetchMock = vi.fn();
 
@@ -61,7 +65,12 @@ describe('searchTitles', () => {
     fetchMock.mockReturnValueOnce(
       ok({
         results: [
-          { id: 2, name: 'Severance', first_air_date: '2022-02-01', poster_path: null },
+          {
+            id: 2,
+            name: 'Severance',
+            first_air_date: '2022-02-01',
+            poster_path: null,
+          },
         ],
       }),
     );
@@ -76,7 +85,12 @@ describe('searchTitles', () => {
     fetchMock.mockReturnValueOnce(
       ok({
         results: [
-          { id: 1, media_type: 'movie', title: 'A', release_date: '2020-01-01' },
+          {
+            id: 1,
+            media_type: 'movie',
+            title: 'A',
+            release_date: '2020-01-01',
+          },
           { id: 2, media_type: 'tv', name: 'B', first_air_date: '2021-01-01' },
           { id: 3, media_type: 'person', name: 'Someone' },
         ],

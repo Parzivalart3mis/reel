@@ -54,16 +54,16 @@ Local dev uses a plain SQLite file (`file:./local.db`) — no Docker, no cloud a
 
 Copy `.env.example` to `.env.local` and fill in:
 
-| Variable | Required | What it's for | Where to get it |
-| --- | --- | --- | --- |
-| `NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY` | yes | Clerk client key | [dashboard.clerk.com](https://dashboard.clerk.com) → API keys |
-| `CLERK_SECRET_KEY` | yes | Clerk server key | same |
-| `TURSO_DATABASE_URL` | yes | DB URL — `file:./local.db` locally, `libsql://…` in prod | [turso.tech](https://turso.tech) (`turso db create reel`) |
-| `TURSO_AUTH_TOKEN` | prod only | Auth token for hosted Turso (empty locally) | `turso db tokens create reel` |
-| `TMDB_API_KEY` | for search | Film/TV metadata + posters | **Free** — see below |
-| `UPSTASH_REDIS_REST_URL` | prod | Rate limiting (disabled if empty) | [console.upstash.com](https://console.upstash.com) |
-| `UPSTASH_REDIS_REST_TOKEN` | prod | Rate limiting | same |
-| `ANTHROPIC_API_KEY` | optional | Watch Tonight AI panel only | [console.anthropic.com](https://console.anthropic.com) |
+| Variable                            | Required   | What it's for                                            | Where to get it                                               |
+| ----------------------------------- | ---------- | -------------------------------------------------------- | ------------------------------------------------------------- |
+| `NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY` | yes        | Clerk client key                                         | [dashboard.clerk.com](https://dashboard.clerk.com) → API keys |
+| `CLERK_SECRET_KEY`                  | yes        | Clerk server key                                         | same                                                          |
+| `TURSO_DATABASE_URL`                | yes        | DB URL — `file:./local.db` locally, `libsql://…` in prod | [turso.tech](https://turso.tech) (`turso db create reel`)     |
+| `TURSO_AUTH_TOKEN`                  | prod only  | Auth token for hosted Turso (empty locally)              | `turso db tokens create reel`                                 |
+| `TMDB_API_KEY`                      | for search | Film/TV metadata + posters                               | **Free** — see below                                          |
+| `UPSTASH_REDIS_REST_URL`            | prod       | Rate limiting (disabled if empty)                        | [console.upstash.com](https://console.upstash.com)            |
+| `UPSTASH_REDIS_REST_TOKEN`          | prod       | Rate limiting                                            | same                                                          |
+| `ANTHROPIC_API_KEY`                 | optional   | Watch Tonight AI panel only                              | [console.anthropic.com](https://console.anthropic.com)        |
 
 **Get a free TMDB API key:** create an account at [themoviedb.org](https://www.themoviedb.org/), go to **Settings → API**, request a developer key (instant, free), and paste either the **v3 API key** or the **v4 Read Access Token** into `TMDB_API_KEY` — Reel auto-detects which you provided. The key is server-side only and never reaches the browser.
 
@@ -71,21 +71,21 @@ Copy `.env.example` to `.env.local` and fill in:
 
 ## Scripts
 
-| Script | What it does |
-| --- | --- |
-| `pnpm dev` | Start the dev server |
-| `pnpm build` | Production build |
-| `pnpm start` | Serve the production build |
-| `pnpm test` | Unit + integration tests (Vitest) |
-| `pnpm test:e2e` | Playwright flows (needs a base URL + Clerk test user) |
-| `pnpm lint` | ESLint |
-| `pnpm typecheck` | `tsc --noEmit` (strict) |
-| `pnpm format` | Prettier (with Tailwind class sorting) |
-| `pnpm db:push` | Push the schema to the DB (dev) |
-| `pnpm db:generate` | Generate SQL migrations |
-| `pnpm db:migrate` | Apply migrations (CI / prod build step) |
-| `pnpm db:seed` | Seed demo data |
-| `pnpm icons` | Regenerate the icon set from `scripts/generate-icons.ts` |
+| Script             | What it does                                             |
+| ------------------ | -------------------------------------------------------- |
+| `pnpm dev`         | Start the dev server                                     |
+| `pnpm build`       | Production build                                         |
+| `pnpm start`       | Serve the production build                               |
+| `pnpm test`        | Unit + integration tests (Vitest)                        |
+| `pnpm test:e2e`    | Playwright flows (needs a base URL + Clerk test user)    |
+| `pnpm lint`        | ESLint                                                   |
+| `pnpm typecheck`   | `tsc --noEmit` (strict)                                  |
+| `pnpm format`      | Prettier (with Tailwind class sorting)                   |
+| `pnpm db:push`     | Push the schema to the DB (dev)                          |
+| `pnpm db:generate` | Generate SQL migrations                                  |
+| `pnpm db:migrate`  | Apply migrations (CI / prod build step)                  |
+| `pnpm db:seed`     | Seed demo data                                           |
+| `pnpm icons`       | Regenerate the icon set from `scripts/generate-icons.ts` |
 
 ---
 

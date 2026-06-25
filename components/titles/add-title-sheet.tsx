@@ -202,8 +202,13 @@ export function AddTitleSheet({
             />
           </div>
           <div className="flex-1 space-y-3">
-            <Field label="Name" error={errors.name?.message}>
-              <Input {...register('name')} placeholder="Title name" />
+            <Field label="Name" htmlFor="add-name" error={errors.name?.message}>
+              <Input
+                id="add-name"
+                {...register('name')}
+                placeholder="Title name"
+                autoComplete="off"
+              />
             </Field>
             <div className="grid grid-cols-2 gap-3">
               <Field label="Type">
@@ -226,10 +231,12 @@ export function AddTitleSheet({
                   )}
                 />
               </Field>
-              <Field label="Year">
+              <Field label="Year" htmlFor="add-year">
                 <Input
+                  id="add-year"
                   {...register('year')}
                   inputMode="numeric"
+                  autoComplete="off"
                   placeholder="2024"
                 />
               </Field>
@@ -267,17 +274,21 @@ export function AddTitleSheet({
         {type === 'SERIES' &&
           (status === 'WATCHING' || status === 'ON_HOLD') && (
             <div className="grid grid-cols-2 gap-3">
-              <Field label="Season">
+              <Field label="Season" htmlFor="add-season">
                 <Input
+                  id="add-season"
                   {...register('currentSeason')}
                   inputMode="numeric"
+                  autoComplete="off"
                   placeholder="1"
                 />
               </Field>
-              <Field label="Episode">
+              <Field label="Episode" htmlFor="add-episode">
                 <Input
+                  id="add-episode"
                   {...register('currentEpisode')}
                   inputMode="numeric"
+                  autoComplete="off"
                   placeholder="1"
                 />
               </Field>
@@ -286,32 +297,50 @@ export function AddTitleSheet({
 
         <div className="grid grid-cols-2 gap-3">
           {type === 'SERIES' ? (
-            <Field label="Total seasons">
-              <Input {...register('totalSeasons')} inputMode="numeric" />
+            <Field label="Total seasons" htmlFor="add-total-seasons">
+              <Input
+                id="add-total-seasons"
+                {...register('totalSeasons')}
+                inputMode="numeric"
+                autoComplete="off"
+              />
             </Field>
           ) : (
-            <Field label="Runtime (min)">
-              <Input {...register('runtime')} inputMode="numeric" />
+            <Field label="Runtime (min)" htmlFor="add-runtime">
+              <Input
+                id="add-runtime"
+                {...register('runtime')}
+                inputMode="numeric"
+                autoComplete="off"
+              />
             </Field>
           )}
-          <Field label="Tags (comma-separated)">
-            <Input {...register('tags')} placeholder="epic, rewatch" />
+          <Field label="Tags (comma-separated)" htmlFor="add-tags">
+            <Input
+              id="add-tags"
+              {...register('tags')}
+              placeholder="epic, rewatch"
+              autoComplete="off"
+            />
           </Field>
         </div>
 
-        <Field label="Poster URL (optional)">
+        <Field label="Poster URL (optional)" htmlFor="add-poster">
           <Input
+            id="add-poster"
             {...register('posterUrl')}
             placeholder="https://… or leave blank"
+            inputMode="url"
+            autoComplete="off"
           />
         </Field>
 
-        <Field label="Synopsis">
-          <Textarea {...register('overview')} rows={3} />
+        <Field label="Synopsis" htmlFor="add-overview">
+          <Textarea id="add-overview" {...register('overview')} rows={3} />
         </Field>
 
-        <Field label="Notes">
-          <Textarea {...register('notes')} rows={2} />
+        <Field label="Notes" htmlFor="add-notes">
+          <Textarea id="add-notes" {...register('notes')} rows={2} />
         </Field>
 
         <div className="flex justify-end gap-2 pt-1">
@@ -331,15 +360,17 @@ export function AddTitleSheet({
 function Field({
   label,
   error,
+  htmlFor,
   children,
 }: {
   label: string;
   error?: string | undefined;
+  htmlFor?: string | undefined;
   children: React.ReactNode;
 }) {
   return (
     <div className="space-y-1.5">
-      <Label>{label}</Label>
+      <Label htmlFor={htmlFor}>{label}</Label>
       {children}
       {error && <p className="text-xs text-error">{error}</p>}
     </div>

@@ -85,49 +85,64 @@ export function EditDetailsSheet({
     <Sheet open={open} onOpenChange={onOpenChange} title="Edit details">
       <div className="space-y-4">
         <div className="space-y-1.5">
-          <Label>Name</Label>
-          <Input value={name} onChange={(e) => setName(e.target.value)} />
+          <Label htmlFor="edit-name">Name</Label>
+          <Input
+            id="edit-name"
+            value={name}
+            autoComplete="off"
+            onChange={(e) => setName(e.target.value)}
+          />
         </div>
         <div className="grid grid-cols-2 gap-3">
           <div className="space-y-1.5">
-            <Label>Year</Label>
+            <Label htmlFor="edit-year">Year</Label>
             <Input
+              id="edit-year"
               value={year}
               inputMode="numeric"
+              autoComplete="off"
               onChange={(e) => setYear(e.target.value)}
             />
           </div>
           {isSeries ? (
             <div className="space-y-1.5">
-              <Label>Total seasons</Label>
+              <Label htmlFor="edit-total-seasons">Total seasons</Label>
               <Input
+                id="edit-total-seasons"
                 value={totalSeasons}
                 inputMode="numeric"
+                autoComplete="off"
                 onChange={(e) => setTotalSeasons(e.target.value)}
               />
             </div>
           ) : (
             <div className="space-y-1.5">
-              <Label>Runtime (min)</Label>
+              <Label htmlFor="edit-runtime">Runtime (min)</Label>
               <Input
+                id="edit-runtime"
                 value={runtime}
                 inputMode="numeric"
+                autoComplete="off"
                 onChange={(e) => setRuntime(e.target.value)}
               />
             </div>
           )}
         </div>
         <div className="space-y-1.5">
-          <Label>Poster URL</Label>
+          <Label htmlFor="edit-poster">Poster URL</Label>
           <Input
+            id="edit-poster"
             value={posterUrl}
             placeholder="https://… or leave blank"
+            inputMode="url"
+            autoComplete="off"
             onChange={(e) => setPosterUrl(e.target.value)}
           />
         </div>
         <div className="space-y-1.5">
-          <Label>Synopsis</Label>
+          <Label htmlFor="edit-overview">Synopsis</Label>
           <Textarea
+            id="edit-overview"
             value={overview}
             rows={4}
             onChange={(e) => setOverview(e.target.value)}

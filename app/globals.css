@@ -81,15 +81,23 @@
 }
 
 @layer utilities {
+  /* Safe-area helpers. The horizontal one keeps a real gutter (>=1rem) and only
+     grows for a device inset — a bare env() resolves to 0 in portrait and would
+     cancel any base padding it shares an element with. */
   .safe-top {
-    padding-top: env(safe-area-inset-top);
+    padding-top: max(0px, env(safe-area-inset-top));
   }
   .safe-bottom {
-    padding-bottom: env(safe-area-inset-bottom);
+    padding-bottom: max(0px, env(safe-area-inset-bottom));
   }
   .safe-x {
-    padding-left: env(safe-area-inset-left);
-    padding-right: env(safe-area-inset-right);
+    padding-left: max(1rem, env(safe-area-inset-left));
+    padding-right: max(1rem, env(safe-area-inset-right));
+  }
+
+  /* Bottom sheet height: never taller than the visible (keyboard-aware) viewport. */
+  .sheet-max-h {
+    max-height: calc(100dvh - 1rem);
   }
 
   /* Shimmering skeleton fill used by poster-grid loading states. */

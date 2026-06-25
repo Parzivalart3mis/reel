@@ -7,9 +7,19 @@ const base: ListQuery = {};
 
 describe('filterTitles', () => {
   const titles = [
-    makeTitle({ name: 'Dune', type: 'FILM', status: 'WATCHED', tags: ['epic'] }),
+    makeTitle({
+      name: 'Dune',
+      type: 'FILM',
+      status: 'WATCHED',
+      tags: ['epic'],
+    }),
     makeTitle({ name: 'Severance', type: 'SERIES', status: 'WATCHING' }),
-    makeTitle({ name: 'Past Lives', type: 'FILM', status: 'WATCHLIST', favorite: true }),
+    makeTitle({
+      name: 'Past Lives',
+      type: 'FILM',
+      status: 'WATCHLIST',
+      favorite: true,
+    }),
   ];
 
   it('filters by type', () => {
@@ -17,7 +27,9 @@ describe('filterTitles', () => {
   });
 
   it('filters by status', () => {
-    expect(filterTitles(titles, { ...base, status: 'WATCHED' })).toHaveLength(1);
+    expect(filterTitles(titles, { ...base, status: 'WATCHED' })).toHaveLength(
+      1,
+    );
   });
 
   it('filters by favorite', () => {

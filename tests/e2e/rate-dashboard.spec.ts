@@ -24,13 +24,13 @@ test('rate a film and update the dashboard', async ({ page }) => {
   await expect(slider).toHaveAttribute('aria-valuenow', '4');
 
   // Rating implies Watched.
-  await expect(page.getByText('Watched', { exact: true }).first()).toBeVisible();
+  await expect(
+    page.getByText('Watched', { exact: true }).first(),
+  ).toBeVisible();
 
   // Dashboard reflects the rating.
   await page.goto('/dashboard');
-  await expect(
-    page.getByRole('heading', { name: 'Dashboard' }),
-  ).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Dashboard' })).toBeVisible();
   await expect(page.getByText('Average rating')).toBeVisible();
   await expect(page.getByText('4.0').first()).toBeVisible();
 });
