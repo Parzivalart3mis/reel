@@ -1,0 +1,13 @@
+<svg width="512" height="512" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+  <rect width="512" height="512" rx="80" fill="#FAF8F4" />
+  <!-- slate body -->
+  <rect x="112" y="192" width="288" height="208" rx="22" fill="#6D28D9" />
+  <!-- hinged top bar with diagonal stripes -->
+  <clipPath id="bar"><rect x="104" y="118" width="304" height="60" rx="14" /></clipPath>
+  <g clip-path="url(#bar)">
+    <rect x="104" y="118" width="304" height="60" fill="#6D28D9" />
+    <polygon points="40,178 72,178 106,118 74,118" fill="#FAF8F4" /><polygon points="104,178 136,178 170,118 138,118" fill="#FAF8F4" /><polygon points="168,178 200,178 234,118 202,118" fill="#FAF8F4" /><polygon points="232,178 264,178 298,118 266,118" fill="#FAF8F4" /><polygon points="296,178 328,178 362,118 330,118" fill="#FAF8F4" /><polygon points="360,178 392,178 426,118 394,118" fill="#FAF8F4" />
+  </g>
+  <!-- star -->
+  <path d="M346,304 L356,332.25 L385.95,333.02 L362.17,351.25 L370.69,379.98 L346,363 L321.31,379.98 L329.83,351.25 L306.05,333.02 L336,332.25 Z" fill="#FAF8F4" />
+</svg>

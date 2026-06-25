@@ -1,0 +1,39 @@
+# dependencies
+/node_modules
+.pnp
+.pnp.*
+
+# next.js
+/.next/
+/out/
+next-env.d.ts
+
+# production
+/build
+
+# local databases
+*.db
+*.db-journal
+*.sqlite
+local.db
+
+# testing
+/coverage
+/playwright-report
+/test-results
+/.playwright
+playwright/.auth
+
+# env files
+.env
+.env*.local
+
+# misc
+.DS_Store
+*.pem
+.vercel
+.turbo
+*.tsbuildinfo
+.idea
+.vscode/*
+!.vscode/extensions.json
