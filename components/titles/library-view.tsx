@@ -87,16 +87,8 @@ export function LibraryView({ titles }: { titles: TitleDTO[] }) {
 
   return (
     <div className="space-y-6">
-      <div className="space-y-4">
+      <div className="flex justify-center">
         <TypeToggle value={type} onChange={setType} />
-        <div>
-          <h1 className="text-2xl font-semibold tracking-tight text-text">
-            Library
-          </h1>
-          <p className="text-sm text-text-muted">
-            Everything you mean to watch and everything you&apos;ve seen.
-          </p>
-        </div>
       </div>
 
       {titles.length === 0 ? (
@@ -118,13 +110,13 @@ export function LibraryView({ titles }: { titles: TitleDTO[] }) {
               />
             </div>
 
-            <div className="flex flex-wrap items-center gap-2">
+            <div className="flex items-center gap-2">
               <Select
                 value={status}
                 onValueChange={(v) => setStatus(v as StatusFilter)}
               >
                 <SelectTrigger
-                  className="w-[150px]"
+                  className="h-9 min-w-0 flex-1 text-xs sm:max-w-[150px]"
                   aria-label="Filter by status"
                 >
                   <SelectValue />
@@ -143,7 +135,10 @@ export function LibraryView({ titles }: { titles: TitleDTO[] }) {
                 value={sort}
                 onValueChange={(v) => setSort(v as SortOption)}
               >
-                <SelectTrigger className="w-[170px]" aria-label="Sort by">
+                <SelectTrigger
+                  className="h-9 min-w-0 flex-1 text-xs sm:max-w-[170px]"
+                  aria-label="Sort by"
+                >
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
@@ -158,7 +153,7 @@ export function LibraryView({ titles }: { titles: TitleDTO[] }) {
               {allTags.length > 0 && (
                 <Select value={tag} onValueChange={setTag}>
                   <SelectTrigger
-                    className="w-[130px]"
+                    className="h-9 min-w-0 flex-1 text-xs sm:max-w-[120px]"
                     aria-label="Filter by tag"
                   >
                     <SelectValue />
@@ -178,6 +173,7 @@ export function LibraryView({ titles }: { titles: TitleDTO[] }) {
                 type="button"
                 variant={favOnly ? 'default' : 'outline'}
                 size="icon"
+                className="size-9 shrink-0"
                 aria-pressed={favOnly}
                 aria-label="Show favorites only"
                 onClick={() => setFavOnly((v) => !v)}

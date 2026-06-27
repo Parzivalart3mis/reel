@@ -24,7 +24,7 @@ setup('authenticate', async ({ page }) => {
   });
 
   await page.goto('/');
-  await expect(page.getByRole('heading', { name: 'Library' })).toBeVisible();
+  await expect(page.getByRole('radio', { name: 'Movies' })).toBeVisible();
 
   await page.context().storageState({ path: authFile });
 });
