@@ -15,10 +15,10 @@ export const metadata: Metadata = {
     process.env.NEXT_PUBLIC_APP_URL ?? 'http://localhost:3000',
   ),
   title: {
-    default: 'Reel — your film & TV tracker',
+    default: 'Reel — your movies & TV tracker',
     template: '%s · Reel',
   },
-  description: 'Your film and TV watchlist and watched log.',
+  description: 'Your movies and TV watchlist and watched log.',
   applicationName: 'Reel',
   manifest: '/manifest.webmanifest',
   appleWebApp: {

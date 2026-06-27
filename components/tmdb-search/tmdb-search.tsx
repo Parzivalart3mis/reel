@@ -68,9 +68,9 @@ export function TmdbSearch({ type = 'ALL', onPick }: TmdbSearchProps) {
         <Input
           value={query}
           onChange={(e) => setQuery(e.target.value)}
-          placeholder="Search films & series…"
+          placeholder="Search movies & series…"
           className="pl-9 [&::-webkit-search-cancel-button]:appearance-none"
-          aria-label="Search the film database"
+          aria-label="Search the movie database"
           type="search"
           inputMode="search"
           enterKeyHint="search"

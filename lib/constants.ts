@@ -14,7 +14,12 @@ export const IMAGE_SOURCE = ['TMDB', 'CUSTOM', 'NONE'] as const;
 export type ImageSource = (typeof IMAGE_SOURCE)[number];
 
 export const TITLE_TYPE_LABEL: Record<TitleType, string> = {
-  FILM: 'Film',
+  FILM: 'Movie',
+  SERIES: 'Series',
+};
+
+export const TITLE_TYPE_LABEL_PLURAL: Record<TitleType, string> = {
+  FILM: 'Movies',
   SERIES: 'Series',
 };
 

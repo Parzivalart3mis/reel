@@ -51,10 +51,10 @@ async function tmdbFetch<T>(path: string, revalidate: number): Promise<T> {
       next: { revalidate },
     });
   } catch {
-    throw new ApiError('UPSTREAM', 'Could not reach the film database');
+    throw new ApiError('UPSTREAM', 'Could not reach the movie database');
   }
   if (!res.ok) {
-    throw new ApiError('UPSTREAM', `Film database error (${res.status})`);
+    throw new ApiError('UPSTREAM', `Movie database error (${res.status})`);
   }
   return (await res.json()) as T;
 }

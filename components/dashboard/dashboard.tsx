@@ -85,7 +85,7 @@ export function Dashboard({
           Dashboard
         </h1>
         <p className="text-sm text-text-muted">
-          Your film and TV life at a glance.
+          Your movies and TV life at a glance.
         </p>
       </div>
 
@@ -148,7 +148,7 @@ export function Dashboard({
       />
 
       <p className="tabular text-xs text-text-hint">
-        {stats.filmCount} films · {stats.seriesCount} series ·{' '}
+        {stats.filmCount} movies · {stats.seriesCount} series ·{' '}
         {formatTotalRuntime(stats.totalRuntimeMinutes)} watched
       </p>
     </div>

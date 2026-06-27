@@ -5,7 +5,7 @@ import { Logo } from '@/components/logo';
 import { Button } from '@/components/ui/button';
 
 export const metadata: Metadata = {
-  title: 'Reel — your film & TV tracker',
+  title: 'Reel — your movies & TV tracker',
 };
 
 const features = [
@@ -41,7 +41,7 @@ export default function WelcomePage() {
       <section className="safe-x relative z-10 mx-auto flex w-full max-w-5xl flex-1 flex-col items-center justify-center px-4 py-12 text-center">
         <span className="mb-6 inline-flex items-center gap-2 rounded-full border border-border bg-surface px-3 py-1 text-sm text-text-muted">
           <Clapperboard className="size-4 text-accent" />
-          Personal film &amp; TV tracker
+          Personal movies &amp; TV tracker
         </span>
         <h1 className="max-w-2xl text-balance text-4xl font-semibold tracking-tight text-text sm:text-5xl">
           Everything you mean to watch, and everything you&apos;ve seen.

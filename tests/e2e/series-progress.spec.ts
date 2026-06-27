@@ -27,6 +27,9 @@ test('track a series and bump the episode', async ({ page }) => {
 
   await dialog.getByRole('button', { name: 'Add title' }).click();
 
+  // The library defaults to Movies — switch to the Series tab to see it.
+  await page.getByRole('radio', { name: 'Series' }).click();
+
   // Open the title and confirm S2E5, then bump the episode.
   await page.getByRole('link', { name: /E2E Severance/ }).click();
   await expect(
