@@ -1,6 +1,6 @@
 'use client';
 
-import { useMemo, useState } from 'react';
+import { useMemo, useRef, useState } from 'react';
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
 import { Heart, Plus, Search } from 'lucide-react';
 import { PosterCard } from '@/components/titles/poster-card';
@@ -19,6 +19,7 @@ import {
   SORT_LABEL,
   SORT_OPTIONS,
   STATUS_LABEL,
+  TITLE_TYPE,
   WATCH_STATUS,
   type SortOption,
   type TitleType,
@@ -26,7 +27,7 @@ import {
 } from '@/lib/constants';
 import { openAddTitle } from '@/lib/events';
 import type { TitleDTO } from '@/lib/serialize';
-import { cn } from '@/lib/utils';
+import { cn, swipeDirection } from '@/lib/utils';
 
 type StatusFilter = 'ALL' | WatchStatus;
 
@@ -84,6 +85,31 @@ export function LibraryView({ titles }: { titles: TitleDTO[] }) {
   }, [titles, q, type, status, favOnly, tag, sort]);
 
   const filterKey = `${type}-${status}-${sort}-${favOnly}-${tag}-${q}`;
+
+  // Swipe left/right to flip between the Movies and Series tabs.
+  const touchStart = useRef<{ x: number; y: number } | null>(null);
+
+  const onTouchStart = (e: React.TouchEvent) => {
+    const t = e.touches.length === 1 ? e.touches[0] : undefined;
+    touchStart.current = t ? { x: t.clientX, y: t.clientY } : null;
+  };
+
+  const onTouchEnd = (e: React.TouchEvent) => {
+    const start = touchStart.current;
+    touchStart.current = null;
+    const t = e.changedTouches[0];
+    if (!start || !t) return;
+    const dir = swipeDirection(t.clientX - start.x, t.clientY - start.y);
+    if (!dir) return;
+    setType((cur) => {
+      const i = TITLE_TYPE.indexOf(cur);
+      const clamped = Math.min(
+        TITLE_TYPE.length - 1,
+        Math.max(0, dir === 'next' ? i + 1 : i - 1),
+      );
+      return TITLE_TYPE[clamped] ?? cur;
+    });
+  };
 
   return (
     <div className="space-y-6">
@@ -187,27 +213,33 @@ export function LibraryView({ titles }: { titles: TitleDTO[] }) {
             </p>
           </div>
 
-          {filtered.length === 0 ? (
-            <EmptyState
-              title="No matches"
-              body="Try a different search or clear your filters."
-              hideAdd
-            />
-          ) : (
-            <AnimatePresence mode="wait">
-              <motion.div
-                key={filterKey}
-                variants={reduce ? reducedContainer : gridContainer}
-                initial="hidden"
-                animate="show"
-                className="grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5"
-              >
-                {filtered.map((t, i) => (
-                  <PosterCard key={t.id} title={t} priority={i < 5} />
-                ))}
-              </motion.div>
-            </AnimatePresence>
-          )}
+          <div
+            className="touch-pan-y"
+            onTouchStart={onTouchStart}
+            onTouchEnd={onTouchEnd}
+          >
+            {filtered.length === 0 ? (
+              <EmptyState
+                title="No matches"
+                body="Try a different search or clear your filters."
+                hideAdd
+              />
+            ) : (
+              <AnimatePresence mode="wait">
+                <motion.div
+                  key={filterKey}
+                  variants={reduce ? reducedContainer : gridContainer}
+                  initial="hidden"
+                  animate="show"
+                  className="grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5"
+                >
+                  {filtered.map((t, i) => (
+                    <PosterCard key={t.id} title={t} priority={i < 5} />
+                  ))}
+                </motion.div>
+              </AnimatePresence>
+            )}
+          </div>
         </div>
       )}
     </div>

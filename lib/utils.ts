@@ -33,3 +33,18 @@ export function formatProgress(
   const e = episode ?? 1;
   return `S${s}E${e}`;
 }
+
+/**
+ * Classify a touch gesture from its deltas. Returns 'next' (swipe left),
+ * 'prev' (swipe right), or null when it's a tap or a vertical scroll.
+ * Requires a horizontal distance past `threshold` and horizontal dominance.
+ */
+export function swipeDirection(
+  dx: number,
+  dy: number,
+  threshold = 60,
+): 'next' | 'prev' | null {
+  if (Math.abs(dx) < threshold) return null;
+  if (Math.abs(dx) <= Math.abs(dy)) return null;
+  return dx < 0 ? 'next' : 'prev';
+}

@@ -4,6 +4,7 @@ import {
   formatProgress,
   formatRuntime,
   formatTotalRuntime,
+  swipeDirection,
 } from '@/lib/utils';
 
 describe('cn', () => {
@@ -43,5 +44,26 @@ describe('formatProgress', () => {
     expect(formatProgress(2, 5)).toBe('S2E5');
     expect(formatProgress(null, null)).toBeNull();
     expect(formatProgress(1, null)).toBe('S1E1');
+  });
+});
+
+describe('swipeDirection', () => {
+  it('detects a leftward swipe as next', () => {
+    expect(swipeDirection(-100, 10)).toBe('next');
+  });
+  it('detects a rightward swipe as prev', () => {
+    expect(swipeDirection(100, -10)).toBe('prev');
+  });
+  it('ignores gestures below the distance threshold', () => {
+    expect(swipeDirection(-40, 0)).toBeNull();
+    expect(swipeDirection(0, 0)).toBeNull();
+  });
+  it('ignores vertical-dominant gestures (scrolling)', () => {
+    expect(swipeDirection(-100, -140)).toBeNull();
+    expect(swipeDirection(70, 200)).toBeNull();
+  });
+  it('honors a custom threshold', () => {
+    expect(swipeDirection(-50, 0, 40)).toBe('next');
+    expect(swipeDirection(-50, 0, 80)).toBeNull();
   });
 });
