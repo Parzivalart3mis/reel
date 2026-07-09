@@ -36,8 +36,20 @@ export async function enforceRateLimit(
 ): Promise<void> {
   const limiter = limiters[name];
   if (!limiter) return;
-  const { success } = await limiter.limit(userId);
-  if (!success) {
-    throw new ApiError('RATE_LIMITED', 'Too many requests, slow down a moment');
+  try {
+    const { success } = await limiter.limit(userId);
+    if (!success) {
+      throw new ApiError(
+        'RATE_LIMITED',
+        'Too many requests, slow down a moment',
+      );
+    }
+  } catch (err) {
+    // A genuine "over the limit" result must still be enforced.
+    if (err instanceof ApiError) throw err;
+    // Any other failure means the rate-limit backend (Upstash) is
+    // unreachable — fail open so an outage never breaks the real request.
+    // eslint-disable-next-line no-console
+    console.error('[ratelimit] check failed, allowing request:', err);
   }
 }
