@@ -21,10 +21,22 @@ export interface TmdbDetails {
   runtime: number | null;
   totalSeasons: number | null;
   genres: string[];
+  originalLanguage: string | null;
 }
 
 export function tmdbConfigured(): boolean {
   return Boolean(process.env.TMDB_API_KEY);
+}
+
+/**
+ * Heuristic: a title is anime when it's animated and originally Japanese.
+ * Used to auto-suggest an `anime` tag on add.
+ */
+export function isAnimeTitle(
+  genres: string[],
+  originalLanguage: string | null,
+): boolean {
+  return originalLanguage === 'ja' && genres.includes('Animation');
 }
 
 function authFor(key: string): { headers: HeadersInit; query: string } {
@@ -144,6 +156,7 @@ interface MovieDetails {
   runtime?: number | null;
   poster_path?: string | null;
   genres?: TmdbGenre[];
+  original_language?: string | null;
 }
 interface TvDetails {
   name?: string;
@@ -153,6 +166,7 @@ interface TvDetails {
   episode_run_time?: number[];
   poster_path?: string | null;
   genres?: TmdbGenre[];
+  original_language?: string | null;
 }
 
 /** Fetch full details for a single TMDB title. */
@@ -170,6 +184,7 @@ export async function getDetails(
       runtime: d.runtime ?? null,
       totalSeasons: null,
       genres: (d.genres ?? []).map((g) => g.name),
+      originalLanguage: d.original_language ?? null,
     };
   }
   const d = await tmdbFetch<TvDetails>(`/tv/${tmdbId}`, 86400);
@@ -181,5 +196,6 @@ export async function getDetails(
     runtime: d.episode_run_time?.[0] ?? null,
     totalSeasons: d.number_of_seasons ?? null,
     genres: (d.genres ?? []).map((g) => g.name),
+    originalLanguage: d.original_language ?? null,
   };
 }

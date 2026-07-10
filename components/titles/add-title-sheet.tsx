@@ -31,7 +31,7 @@ import {
   type ImageSource,
 } from '@/lib/constants';
 import { titleCreateSchema } from '@/lib/schemas/title';
-import type { TmdbSearchResult } from '@/lib/tmdb';
+import { isAnimeTitle, type TmdbSearchResult } from '@/lib/tmdb';
 
 const formSchema = z.object({
   name: z.string().trim().min(1, 'Name is required').max(300),
@@ -55,6 +55,18 @@ const numOrUndef = (s: string | undefined): number | undefined => {
   return Number.isFinite(n) ? n : undefined;
 };
 
+/** Merge a tag into a comma-separated tags string (deduped, capped at 15). */
+const addTag = (current: string | undefined, tag: string): string => {
+  const tags = (current ?? '')
+    .split(',')
+    .map((t) => t.trim())
+    .filter(Boolean);
+  if (tags.some((t) => t.toLowerCase() === tag.toLowerCase())) {
+    return tags.join(', ');
+  }
+  return [...tags, tag].slice(0, 15).join(', ');
+};
+
 export function AddTitleSheet({
   open,
   onOpenChange,
@@ -75,6 +87,7 @@ export function AddTitleSheet({
     control,
     reset,
     setValue,
+    getValues,
     watch,
     formState: { errors },
   } = useForm<FormValues>({
@@ -117,6 +130,11 @@ export function AddTitleSheet({
       if (details.posterUrl) {
         tmdbPoster.current = details.posterUrl;
         setValue('posterUrl', details.posterUrl);
+      }
+      // Anime lives inside Movies/Series; auto-suggest an `anime` tag so it
+      // stays filterable. The user can remove it before saving.
+      if (isAnimeTitle(details.genres, details.originalLanguage)) {
+        setValue('tags', addTag(getValues('tags'), 'anime'));
       }
     } catch {
       // Details are best-effort; the search result already filled the basics.

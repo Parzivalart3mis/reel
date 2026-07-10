@@ -2,6 +2,7 @@ import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import {
   TMDB_POSTER_BASE,
   getDetails,
+  isAnimeTitle,
   searchTitles,
   tmdbConfigured,
 } from '@/lib/tmdb';
@@ -124,19 +125,36 @@ describe('getDetails', () => {
     });
   });
 
-  it('returns series details with episode runtime', async () => {
+  it('returns series details with episode runtime and original language', async () => {
     fetchMock.mockReturnValueOnce(
       ok({
-        name: 'Severance',
-        first_air_date: '2022-02-01',
-        number_of_seasons: 2,
-        episode_run_time: [50],
-        genres: [{ id: 1, name: 'Mystery' }],
+        name: 'Attack on Titan',
+        first_air_date: '2013-04-07',
+        number_of_seasons: 4,
+        episode_run_time: [24],
+        genres: [{ id: 16, name: 'Animation' }],
+        original_language: 'ja',
       }),
     );
     const d = await getDetails(2, 'SERIES');
-    expect(d.totalSeasons).toBe(2);
-    expect(d.runtime).toBe(50);
+    expect(d.totalSeasons).toBe(4);
+    expect(d.runtime).toBe(24);
+    expect(d.originalLanguage).toBe('ja');
+  });
+});
+
+describe('isAnimeTitle', () => {
+  it('flags animated + Japanese titles', () => {
+    expect(isAnimeTitle(['Animation', 'Action'], 'ja')).toBe(true);
+  });
+  it('rejects non-Japanese animation', () => {
+    expect(isAnimeTitle(['Animation'], 'en')).toBe(false);
+  });
+  it('rejects Japanese non-animation', () => {
+    expect(isAnimeTitle(['Drama'], 'ja')).toBe(false);
+  });
+  it('handles missing language', () => {
+    expect(isAnimeTitle(['Animation'], null)).toBe(false);
   });
 });
 
